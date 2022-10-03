@@ -9,11 +9,13 @@ import com.pengrad.telegrambot.response.BaseResponse;
 import com.pengrad.telegrambot.response.GetUpdatesResponse;
 import com.pengrad.telegrambot.response.SendResponse;
 import com.pengrad.telegrambot.model.Update;
+import com.controller.Controller;
 
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        Controller controller = new Controller();
         // Create your bot passing the token received from @BotFather
         TelegramBot bot = new TelegramBot("");
 
