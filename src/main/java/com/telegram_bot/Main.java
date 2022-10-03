@@ -17,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
         Controller controller = new Controller();
         // Create your bot passing the token received from @BotFather
-        TelegramBot bot = new TelegramBot("");
+        TelegramBot bot = new TelegramBot("aqui nao otario");
 
         // Objeto responsavel por receber as mensagens.
         GetUpdatesResponse updatesResponse;
