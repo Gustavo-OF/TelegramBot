@@ -2,17 +2,15 @@ package com.model;
 
 import java.util.List;
 
-public class Personagem {
-    public int id;
-    public String name;
-    public String gender;
-    public String image;
-    public int speciesId;
-    public int originalSerieId;
-    public String createdAt;
-    public String updatedAt;
+public class Planeta {
+    private int id;
+    private String name;
+    private String image;
+    private String createdAt;
+    private String updatedAt;
+    private List<Personagem> characters;
 
-    public Personagem(){
+    public Planeta(){
 
     }
 
@@ -32,36 +30,12 @@ public class Personagem {
         this.name = name;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public int getSpeciesId() {
-        return speciesId;
-    }
-
-    public void setSpeciesId(int speciesId) {
-        this.speciesId = speciesId;
-    }
-
-    public int getOriginalSerieId() {
-        return originalSerieId;
-    }
-
-    public void setOriginalSerieId(int originalSerieId) {
-        this.originalSerieId = originalSerieId;
     }
 
     public String getCreatedAt() {
@@ -80,17 +54,26 @@ public class Personagem {
         this.updatedAt = updatedAt;
     }
 
+    public List<Personagem> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<Personagem> characters) {
+        this.characters = characters;
+    }
+
+
     @Override
     public String toString() {
-        return "Personagem{" +
+        return "Planeta{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", gender='" + gender + '\'' +
                 ", image='" + image + '\'' +
-                ", speciesId=" + speciesId +
-                ", originalSerieId=" + originalSerieId +
                 ", createdAt='" + createdAt + '\'' +
                 ", updatedAt='" + updatedAt + '\'' +
+                ", characters=" + characters +
                 '}';
     }
+
+
 }

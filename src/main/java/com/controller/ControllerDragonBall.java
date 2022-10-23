@@ -13,12 +13,43 @@ public class ControllerDragonBall {
         this.dragonBallService.auth();
     }
 
+    /**
+     * Recebe o parametro que o usuário deseja saber sobre Dragon Ball e devolve para o bot
+     * @param mensagem
+     * @return
+     */
     public String pesquisaDragonBall(String mensagem){
-        String retornoBot = "";
+        StringBuilder retornoBot = new StringBuilder();
         Collection<Collection> retornoApi = null;
-        if(Objects.equals(mensagem, "Sagas")){
-            retornoApi = this.dragonBallService.getSagas();
+        switch (mensagem){
+            case "Sagas":
+            case "sagas":
+                retornoApi = this.dragonBallService.getSagas();
+                break;
+            case "Personagens":
+            case "personagens":
+               retornoApi = this.dragonBallService.getCharacters();
+                break;
+            case "Planetas":
+            case "planetas":
+                retornoApi = this.dragonBallService.getPlanets();
+                break;
+            case "Espécies":
+            case "espécies":
+            case "Especies":
+            case "especies":
+                retornoApi = this.dragonBallService.getSpecies();
+                break;
         }
-        return retornoApi.toString();
+        if(retornoApi != null){
+            for(Collection collectionApi: retornoApi){
+                for(Object linhaApi: collectionApi){
+                    retornoBot.append(linhaApi).append("\n \n");
+                }
+            }
+        }else{
+            retornoBot.append("Não entendi...");
+        }
+        return retornoBot.toString();
     }
 }

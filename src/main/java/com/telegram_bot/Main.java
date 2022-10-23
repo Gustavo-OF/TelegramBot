@@ -7,6 +7,9 @@ import com.controller.ControllerBot;
 import com.controller.ControllerMensagem;
 
 public class Main {
+    /** Método principal que incicia o bot
+     * @param args
+     */
     public static void main(String[] args) {
         TelegramService telegramService = new TelegramService();
         DragonBallService dragonBallService = new DragonBallService();

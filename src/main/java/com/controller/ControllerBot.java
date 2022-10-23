@@ -13,6 +13,9 @@ public class ControllerBot {
         this.controllerMensagem = controllerMensagem;
     }
 
+    /**
+     * Método que fica monitorando novas mensagens e manda a resposta para o usuário
+     */
     public void gerenciaMensagem(){
         while(true){
             List<Update> updates = this.telegramService.verificaAtualizacoes();
@@ -20,6 +23,7 @@ public class ControllerBot {
                 for(Update update : updates){
                     this.telegramService.atualizaId(update);
                     String mensagem = this.telegramService.capturaMensagem(update);
+                    // Capturo o nome da pesssoa para usar no inicio da conversa e no fim
                     String nomePessoa = update.message().from().firstName();
                     String resposta = this.controllerMensagem.analisaMensagem(mensagem, nomePessoa);
                     if(this.telegramService.enviaStatusEscrevendo(update)){

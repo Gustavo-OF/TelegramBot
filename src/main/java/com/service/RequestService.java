@@ -24,6 +24,14 @@ public class RequestService {
         this.httpClient = HttpClientBuilder.create().build();
     }
 
+    /**
+     * Faz a requisição GET, passando a chave de acesso, e retorna a resposta do Body
+     * @param url
+     * @param authKey
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
+     */
     protected String sendGET(String url, String authKey) throws IOException, InterruptedException {
         HttpGet request = new HttpGet(url);
         request.addHeader("content-type", "application/json");
@@ -33,13 +41,6 @@ public class RequestService {
         return EntityUtils.toString(entity,"UTF-8");
     }
 
-    protected String sendGET(String url) throws IOException, InterruptedException {
-        HttpGet request = new HttpGet(url);
-        request.addHeader("content-type", "application/json");
-        HttpResponse response = this.httpClient.execute(request);
-        HttpEntity entity = response.getEntity();
-        return EntityUtils.toString(entity,"UTF-8");
-    }
 
     protected String sendPOST(String url, Auth auth) throws IOException, InterruptedException {
         String paramsJson = gson.toJson(auth);

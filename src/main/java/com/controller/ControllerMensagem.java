@@ -10,22 +10,28 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ControllerMensagem {
+    //  Propriedade que utilizo para guardar o estado da conversa
     private String estado;
     private ControllerDragonBall controllerDragonBall;
     public ControllerMensagem(ControllerDragonBall controllerDragonBall){
         this.controllerDragonBall = controllerDragonBall;
     }
 
+    /**
+     * Recebe a mensagem que foi enviada pelo usuário e classifica de acordo com o tipo dela
+     * @param mensagem
+     * @return
+     */
     public String analisaTipoMensagem(String mensagem){
         Pattern saudacoes = Pattern.compile("Olá|Ola|Oi|Bom dia|Boa tarde|Boa noite", Pattern.CASE_INSENSITIVE);
         Pattern despedida = Pattern.compile("Tchau|Até mais|Adeus|xau", Pattern.CASE_INSENSITIVE);
         Pattern dragonBall = Pattern.compile("Dragon|Dragon ball|Dragon ball z", Pattern.CASE_INSENSITIVE);
-        Pattern previsao = Pattern.compile("Previsão|Previsao|clima|tempo", Pattern.CASE_INSENSITIVE);
+        Pattern agradecimento = Pattern.compile("Obrigado|Valeu|Thanks",Pattern.CASE_INSENSITIVE);
 
         Matcher encontraSaudacoes = saudacoes.matcher(mensagem);
         Matcher encontraDespedida = despedida.matcher(mensagem);
         Matcher encontraDragonBall = dragonBall.matcher(mensagem);
-        Matcher encontraPrevisao = previsao.matcher(mensagem);
+        Matcher encontraAgradecimento = agradecimento.matcher(mensagem);
 
         if(encontraSaudacoes.find()){
             return "Saudacoes";
@@ -33,20 +39,25 @@ public class ControllerMensagem {
             return "Despedida";
         }else if(encontraDragonBall.find()){
             return "DragonBall";
-        }else if(encontraPrevisao.find()){
-            return "Previsao";
+        }else if(encontraAgradecimento.find()){
+            return "Agradecimento";
         }else{
             return "Não encontrado";
         }
     }
 
+    /**
+     * Método que analisa a mensagem recebida e redireciona para a resposta de acordo
+     * com o tipo da mensagem e o estado da conversa
+     *
+     * @param mensagem
+     * @param nomePessoa
+     * @return
+     */
     public String analisaMensagem(String mensagem, String nomePessoa){
         String resposta = "";
         if(Objects.equals(this.estado, "DragonBall")){
             resposta = this.controllerDragonBall.pesquisaDragonBall(mensagem);
-            this.estado = "";
-        }else if(Objects.equals(this.estado, "Clima")){
-            resposta = enviaPrevisao();
             this.estado = "";
         }else{
             switch (analisaTipoMensagem(mensagem)){
@@ -57,9 +68,8 @@ public class ControllerMensagem {
                     resposta = enviaDragonBall();
                     this.estado = "DragonBall";
                     break;
-                case "Previsao":
-                    resposta = enviaPrevisao();
-                    this.estado = "Clima";
+                case "Agradecimento":
+                    resposta = enviaAgradecimento(nomePessoa);
                     break;
                 case "Despedida":
                     resposta = enviaDespedida(nomePessoa);
@@ -71,20 +81,33 @@ public class ControllerMensagem {
         return resposta;
     }
 
+    public String enviaAgradecimento(String nomePessoa){
+        return "De nada, "+nomePessoa+"!";
+    }
+
+    /**
+     * Envia uma mensagem de despedida para o usuário
+     * @param nomePessoa
+     * @return
+     */
     public String enviaDespedida(String nomePessoa){
         return "Tchau, "+nomePessoa+"! Foi um prazer conversar com você, tenha um ótimo dia!";
     }
 
-    public String enviaPrevisao(){
-        return "Posso te passar as informações do clima de qualquer lugar! Me fala o nome da" +
-                " cidade que te mando.";
-    }
-
+    /**
+     * Inicia a conversa sobre Dragon Ball
+     * @return
+     */
     public String enviaDragonBall(){
         return "Sou especialista em Dragon Ball! Sobre o que você deseja saber? " +
                     " Posso falar sobre: Sagas, Planetas, Personagens ou Espécies";
     }
 
+    /**
+     * Envia uma mensagem de saudações para o usuário
+     * @param nomePessoa
+     * @return
+     */
     public String enviaSaudacoes(String nomePessoa){
         Date date = new Date();
         Calendar calendar = GregorianCalendar.getInstance();
@@ -97,7 +120,7 @@ public class ControllerMensagem {
         }else{
             parteDoDia = "Boa noite";
         }
-        return "Olá,"+nomePessoa+". "+parteDoDia+"! Como posso te ajudar?";
+        return "Olá, "+nomePessoa+". "+parteDoDia+"! Como posso te ajudar?";
 
     }
 }
